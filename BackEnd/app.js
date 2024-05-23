@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import { dbConnection } from "./database/dbConnection.js";
 
 const app = express();
 config({ path: "./config/config.env" });
@@ -24,7 +25,6 @@ app.use(express.json());
 
 //? It parses incoming requests with URL-encoded payloads and is based on a body parser
 app.use(express.urlencoded({ extended: true }));
-export default app;
 
 //? fileupload
 app.use(
@@ -33,3 +33,7 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+dbConnection();
+
+export default app;
