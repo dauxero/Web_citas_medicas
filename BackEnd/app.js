@@ -6,9 +6,6 @@ import cookieParser from "cookie-parser";
 const app = express();
 config({ path: "./config/config.env" });
 
-const ayuda = "hola mundo";
-console.log(ayuda);
-
 //?cors frontend and admin managet
 app.use(
   cors({
