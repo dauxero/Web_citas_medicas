@@ -4,11 +4,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { dbConnection } from "./database/dbConnection.js";
+import messageRouter from "./router/messageRouter.js";
 
 const app = express();
 config({ path: "./config/config.env" });
 
-//?cors frontend and admin managet
+//nota cors frontend and admin managet
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
@@ -17,16 +18,16 @@ app.use(
   })
 );
 
-//? cors cookies
+//nota cors cookies
 app.use(cookieParser());
 
-//? analysis format json
+//nota analysis format json
 app.use(express.json());
 
-//? It parses incoming requests with URL-encoded payloads and is based on a body parser
+//nota It parses incoming requests with URL-encoded payloads and is based on a body parser
 app.use(express.urlencoded({ extended: true }));
 
-//? fileupload
+//nota fileupload
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -34,6 +35,10 @@ app.use(
   })
 );
 
+//nota
+app.use("/api/v1/message", messageRouter);
+
+//nota connection database mongodb
 dbConnection();
 
 export default app;
