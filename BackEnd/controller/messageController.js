@@ -1,15 +1,14 @@
 import { Message } from "../model/messageSchema.js";
+import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
+import ErrorHandler from "../middlewares/errorMiddleware.js";
 
-export const sendMessage = async (req, res, next) => {
+export const sendMessage = catchAsyncErrors(async (req, res, next) => {
   //? will get the body values
   const { firstName, lastName, email, phone, message } = req.body;
 
   //? null value conditional / message errors
   if (!firstName || !lastName || !email || !phone || !message) {
-    return res.status(400).json({
-      success: false,
-      message: "Please Fill Full Form",
-    });
+    return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
 
   //? creation of column data, message table
@@ -18,4 +17,4 @@ export const sendMessage = async (req, res, next) => {
     success: true,
     message: "Message Send Successfully",
   });
-};
+});
