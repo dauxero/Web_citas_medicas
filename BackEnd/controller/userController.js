@@ -1,18 +1,18 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { User } from "../model/userSchema.js";
+
+//nota funcion de creacion de patient registro
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
   const {
     firstName,
     lastName,
     email,
     phone,
-    dbo,
+    dob,
     gender,
     password,
     role,
-    doctorDeparment,
-    docAvatar,
     nic,
   } = req.body;
 
@@ -22,34 +22,30 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     !lastName ||
     !email ||
     !phone ||
-    !dbo ||
+    !nic ||
+    !dob ||
     !gender ||
     !password ||
-    !role ||
-    !doctorDeparment ||
-    !docAvatar ||
-    !nic
+    !role
   ) {
     return next(new ErrorHandler("Please Fill Full Form!"), 400);
   }
 
   //? validacion de user en el email ya registrado
-  let User = await User.findOne({ email });
-  if (User) {
+  let user = await User.findOne({ email });
+  if (user) {
     return next(new ErrorHandler("User Already Registered"), 400);
   }
 
-  User = await User.create({
+  user = await User.create({
     firstName,
     lastName,
     email,
     phone,
-    dbo,
+    dob,
     gender,
     password,
     role,
-    doctorDeparment,
-    docAvatar,
     nic,
   });
 
@@ -58,3 +54,5 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     message: "User Registered!",
   });
 });
+
+//nota funcion de iniciar sesion
