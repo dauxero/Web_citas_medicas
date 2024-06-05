@@ -73,7 +73,7 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-//? Genera un token JWT utilizando el ID del usuario y una clave secreta almacenada en las variables de entorno
+//? metodo de generacion de token
 userSchema.methods.generateJsonWebToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES,

@@ -3,7 +3,7 @@ import validator from "validator";
 
 //? create table messageChame  and columns
 
-//NOTA el phone coloca el tipo string para validar que sea de 11 caracteres por eso no se pone number
+//NOTA creacion de mensaje
 const messageSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -33,5 +33,4 @@ const messageSchema = new mongoose.Schema({
   },
 });
 
-//? export variable message = name table, function create columns model from the table Message
 export const Message = mongoose.model("Message", messageSchema);
