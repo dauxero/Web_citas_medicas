@@ -5,6 +5,7 @@ import { generateToken } from "../utils/jwtToken.js";
 
 //nota funcion de creacion de patient rol registro
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
+  //? extraccion de datos
   const {
     firstName,
     lastName,
@@ -17,7 +18,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     nic,
   } = req.body;
 
-  //? validacion de null
+  //? validacion de campos
   if (
     !firstName ||
     !lastName ||
@@ -32,12 +33,13 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Please Fill Full Form!"), 400);
   }
 
-  //? validacion de user en el email ya registrado
+  //? validacion de user creado por email registrado
   let user = await User.findOne({ email });
   if (user) {
     return next(new ErrorHandler("User Already Registered"), 400);
   }
 
+  //? creacion del usuario / si no existe crea un nuevo usuario y genera un token
   user = await User.create({
     firstName,
     lastName,
@@ -55,26 +57,27 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
 //nota funcion de iniciar sesion
 
 export const login = catchAsyncErrors(async (req, res, next) => {
-  //? valides del body del form
   const { email, password, confirmPassword, role } = req.body;
+
+  //? validacion de campos
   if (!email || !password || !confirmPassword || !role) {
     return next(new ErrorHandler("Please Provide All Details!"), 400);
   }
 
-  //? valides de password and confirm password coincidencia
+  //? Verificación de coincidencia de contraseñas
   if (password !== confirmPassword) {
     return next(
       new ErrorHandler("Password and Confirm Password do not match!", 400)
     );
   }
 
-  //? email o password incorrecto
+  //? Verificación de usuario existente
   const user = await User.findOne({ email }).select("+password");
   if (!user) {
     return next(new ErrorHandler("Invalid Password Or Email", 400));
   }
 
-  //? comparacion de password la encriptad y de serie
+  //? Comparación de contraseñas del bd
   const isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Invalid Password Or Email", 400));
@@ -93,7 +96,7 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
   const { firstName, lastName, email, phone, dob, gender, password, nic } =
     req.body;
 
-  //? validacion de campos vacios
+  //? validacion de campos
   if (
     !firstName ||
     !lastName ||
@@ -128,6 +131,7 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
     role: "Admin",
   });
 
+  //? respuesta
   res.status(200).json({
     success: true,
     message: "New Admin Registered",

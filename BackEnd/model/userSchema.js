@@ -60,6 +60,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+//? Antes de guardar el documento, si la contraseña ha sido modificada, se encripta, usando 10 rondas
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
@@ -72,7 +73,7 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-//? metodo de generacion de token
+//? Genera un token JWT utilizando el ID del usuario y una clave secreta almacenada en las variables de entorno
 userSchema.methods.generateJsonWebToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES,
