@@ -3,6 +3,7 @@ import {
   addNewAdmin,
   login,
   patientRegister,
+  getAllDoctors,
 } from "../controller/userController.js";
 import {
   isAdminAuthenticated,
@@ -19,4 +20,8 @@ router.post("/login", login);
 
 //?Post de registro de Admin / auth token
 router.post("/admin/addnew", isAdminAuthenticated, addNewAdmin);
+
+//? get all doctors
+router.get("/doctors", getAllDoctors);
+
 export default router;

@@ -118,7 +118,7 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  //? creacion de admin
+  //? creacion de admin / especificando que el role seria admin
   const admin = await User.create({
     firstName,
     lastName,
@@ -135,5 +135,13 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "New Admin Registered",
+  });
+});
+
+export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
+  const doctors = await User.find({ role: "Doctor" });
+  res.status(200).json({
+    success: true,
+    doctors,
   });
 });
