@@ -26,7 +26,7 @@ app.use(cookieParser());
 //nota analysis format json
 app.use(express.json());
 
-//nota It parses incoming requests with URL-encoded payloads and is based on a body parser
+//nota Analiza solicitudes entrantes con cargas útiles codificadas en URL y se basa en un analizador de cuerpo.
 app.use(express.urlencoded({ extended: true }));
 
 //nota fileupload

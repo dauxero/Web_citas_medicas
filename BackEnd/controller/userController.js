@@ -138,10 +138,35 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+//? get de mostrar si hay un doctors
 export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
   const doctors = await User.find({ role: "Doctor" });
   res.status(200).json({
     success: true,
     doctors,
   });
+});
+
+//?  get de mostar la informacion de los usuarios tanto como patient y admin
+export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
+  //auth
+  const user = req.user;
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+//? desconeccion de usuario / eliminacion de tokens admin
+export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
+  res
+    .status(200)
+    .cookie("adminToken", "", {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+    })
+    .json({
+      success: true,
+      message: "User Log Out Successfully",
+    });
 });
