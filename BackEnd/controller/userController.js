@@ -2,6 +2,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { User } from "../model/userSchema.js";
 import { generateToken } from "../utils/jwtToken.js";
+import cloudinary from "cloudinary";
 
 //nota funcion de creacion de patient rol registro
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
@@ -157,7 +158,7 @@ export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//? desconeccion de usuario / eliminacion de tokens admin
+//? desconexion de usuario / eliminacion de tokens admin
 export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
   res
     .status(200)
@@ -167,6 +168,107 @@ export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
     })
     .json({
       success: true,
-      message: "User Log Out Successfully",
+      message: "Admin Logged Out Successfully",
     });
+});
+
+//? desconexion de patient / eliminacion del token de patient
+export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
+  res
+    .status(200)
+    .cookie("patientToken", "", {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+    })
+    .json({
+      success: true,
+      message: "Patient Logged Out Successfully",
+    });
+});
+
+//? agregar un nuevo doctor
+export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
+  // cuando no recibe un archivo o un objeto que sea v-0
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return next(new ErrorHandler("Doctor Avatar Required", 400));
+  }
+
+  const { doctorAvatar } = req.files;
+
+  //? validacion de formato de imagen
+  const allowedFormats = ["/image/png", "/image/jgeg", "/image/webp"];
+  if (!allowedFormats.includes(doctorAvatar.mimetype)) {
+    return next(new ErrorHandler("File Format Not Supported"), 400);
+  }
+
+  //? validacion de campos vacios
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    dob,
+    gender,
+    password,
+    role,
+    nic,
+    doctorDepartment,
+  } = req.body;
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !phone ||
+    !dob ||
+    !gender ||
+    !password ||
+    !role ||
+    !nic ||
+    !doctorDepartment
+  ) {
+    return next(new ErrorHandler("Please Provide Full Details! "), 400);
+  }
+
+  const isRegistered = await User.findOne({ email });
+  if (isRegistered) {
+    new ErrorHandler(
+      `${isRegistered.role} Already Registered with this email!`,
+      400
+    );
+  }
+
+  //? validacion de carga archivo cloudinary
+  const cloudinaryResponse = await cloudinary.uploader.upload(
+    doctorAvatar.tempFilePath
+  );
+  if (!cloudinaryResponse || cloudinaryResponse.error) {
+    console.error(
+      "Cloudinary Error:",
+      cloudinaryResponse.error || "Unknow Cloudinary Error"
+    );
+  }
+
+  //? creacion de doctor json
+  const doctor = await User.create({
+    firstName,
+    lastName,
+    email,
+    phone,
+    dob,
+    gender,
+    password,
+    nic,
+    doctorDepartment,
+    role: "Doctor",
+    doctorAvatar: {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url,
+    },
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "New Doctor Registered",
+    doctor,
+  });
 });
