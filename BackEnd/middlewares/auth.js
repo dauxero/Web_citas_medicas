@@ -9,7 +9,7 @@ export const isAdminAuthenticated = catchAsyncErrors(async (req, res, next) => {
 
   //? autentificacion de token
   if (!token) {
-    return next(new ErrorHandler("Admin Not Authenticated"), 400);
+    next(new ErrorHandler("Dashboard User is not authenticated!", 400));
   }
 
   //?verificacion si el toque es generado por medio del sitio

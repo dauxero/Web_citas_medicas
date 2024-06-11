@@ -193,11 +193,11 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Doctor Avatar Required", 400));
   }
 
-  const { doctorAvatar } = req.files;
+  const { docAvatar } = req.files;
 
   //? validacion de formato de imagen
-  const allowedFormats = ["/image/png", "/image/jgeg", "/image/webp"];
-  if (!allowedFormats.includes(doctorAvatar.mimetype)) {
+  const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
+  if (!allowedFormats.includes(docAvatar.mimetype)) {
     return next(new ErrorHandler("File Format Not Supported"), 400);
   }
 
@@ -210,10 +210,10 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     dob,
     gender,
     password,
-    role,
     nic,
     doctorDepartment,
   } = req.body;
+
   if (
     !firstName ||
     !lastName ||
@@ -222,9 +222,9 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     !dob ||
     !gender ||
     !password ||
-    !role ||
     !nic ||
-    !doctorDepartment
+    !doctorDepartment ||
+    !docAvatar
   ) {
     return next(new ErrorHandler("Please Provide Full Details! "), 400);
   }
@@ -239,7 +239,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
 
   //? validacion de carga archivo cloudinary
   const cloudinaryResponse = await cloudinary.uploader.upload(
-    doctorAvatar.tempFilePath
+    docAvatar.tempFilePath
   );
   if (!cloudinaryResponse || cloudinaryResponse.error) {
     console.error(
@@ -260,7 +260,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     nic,
     doctorDepartment,
     role: "Doctor",
-    doctorAvatar: {
+    docAvatar: {
       public_id: cloudinaryResponse.public_id,
       url: cloudinaryResponse.secure_url,
     },
