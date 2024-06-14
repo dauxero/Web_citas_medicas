@@ -38,4 +38,5 @@ router.get("/admin/logout", isPatientAuthenticated, logoutPatient);
 
 //? agregar un doctor / el admin es el que agrega un doctor
 router.post("/doctor/addnew", isAdminAuthenticated, addNewDoctor);
+
 export default router;
