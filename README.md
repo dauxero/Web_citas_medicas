@@ -1,6 +1,6 @@
 # Web_citas_medicas
 
-# Used package backend
+# Used package BackEnd
 
 - Bcrypt
 - Cloudinary
@@ -12,3 +12,11 @@
 - jsonwebtoken
 - mongoose
 - validator
+
+# Used package FrontEnd
+
+- Axios
+- react-icon
+- react-multi-carousel
+- react-router-dom
+- react-toastify
