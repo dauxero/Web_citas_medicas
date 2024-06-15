@@ -7,6 +7,7 @@ import { dbConnection } from "./database/dbConnection.js";
 import messageRouter from "./router/messageRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import userRouter from "./router/userRouter.js";
+import appointmentRouter from "./router/appointmentRouter.js";
 
 const app = express();
 config({ path: "./config/config.env" });
@@ -40,6 +41,7 @@ app.use(
 //nota api url of message, user table - post
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/appointment", appointmentRouter);
 
 //nota connection database mongodb
 dbConnection();
