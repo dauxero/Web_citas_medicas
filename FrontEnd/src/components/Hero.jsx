@@ -7,13 +7,12 @@ const Hero = ({ title, imageUrl }) => {
         <div className="banner">
           <h1>{title}</h1>
           <p>
-            Quo quae dolores voluptatibus id incidunt repellat veritatis
-            laborum, libero velit pariatur eum, quibusdam quisquam fugiat magni
-            amet? Modi debitis, soluta accusamus laborum veniam eaque ipsa
-            cupiditate a omnis repellat! Odit quidem ut ipsa aspernatur
-            cupiditate iusto quod distinctio, voluptate quasi natus eum
-            quibusdam numquam sapiente iure tenetur magni facilis molestias
-            quaerat consectetur tempore nam rem, vitae eos voluptatem. Tempora.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Perspiciatis architecto voluptatum, quisquam maxime explicabo fuga
+            aperiam ratione quo perferendis eaque cum excepturi eum. Officiis,
+            saepe! Saepe aut adipisci autem quisquam. Lorem ipsum dolor sit
+            amet, consectetur adipisicing elit. Reprehenderit quae omnis
+            assumenda dignissimos soluta, quia
           </p>
         </div>
         <div className="banner ">
