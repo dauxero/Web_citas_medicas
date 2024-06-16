@@ -1,7 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"); */
 * {
   margin: 0;
   padding: 0;
@@ -64,7 +65,7 @@ h6 {
   }
 }
 .container {
-  padding: 0 100px;
+  padding: 0 130px;
 }
 @media (max-width: 700px) {
   .container {
@@ -96,8 +97,8 @@ h6 {
 }
 .hero .banner span {
   position: absolute;
-  right: -300px;
-  top: -200px;
+  right: 200px;
+  top: -100px;
   z-index: -1;
 }
 .hero .banner:first-child {
@@ -256,6 +257,7 @@ h6 {
   gap: 50px;
   padding-top: 40px;
   padding-bottom: 60px;
+  margin: 0 auto;
 }
 .biography .banner:first-child {
   flex: 1;
