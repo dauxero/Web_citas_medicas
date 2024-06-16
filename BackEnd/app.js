@@ -15,8 +15,8 @@ config({ path: "./config/config.env" });
 //nota cors frontend and admin managet
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: [process.env.FRONTEND_URL_ONE, process.env.FRONTEND_URL_TWO],
+    method: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
 );
