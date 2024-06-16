@@ -20,10 +20,10 @@ const Hero = ({ title, imageUrl }) => {
           <img
             src={imageUrl}
             alt="hero"
-            className="animated-image h-[600px] w-[700px]"
+            className="animated-image h-[250px] sm:h-[600px]"
           />
           <span>
-            <img src="/vector.png" alt="vector" className="w-[1000px]" />
+            <img src="/vector.png" alt="vector" className="md:w-[600px] " />
           </span>
         </div>
       </div>

@@ -75,8 +75,8 @@ h6 {
 .hero {
   display: flex;
   gap: 50px;
-  padding-top: 120px;
-  padding-bottom: 120px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   position: relative;
 }
 .hero .banner {
@@ -97,8 +97,8 @@ h6 {
 }
 .hero .banner span {
   position: absolute;
-  right: 200px;
-  top: -100px;
+  right: 80px;
+  top: 100px;
   z-index: -1;
 }
 .hero .banner:first-child {
@@ -139,6 +139,7 @@ h6 {
     top: -315px;
   }
 }
+
 @media (max-width: 925px) {
   .hero {
     flex-direction: column;
@@ -389,7 +390,7 @@ footer .content div:last-child div svg {
   padding-bottom: 50px;
 }
 .departments h2 {
-  color: gray;
+  color: #111;
   margin-bottom: 30px;
 }
 .card {
