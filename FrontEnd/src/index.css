@@ -75,7 +75,7 @@ h6 {
 .hero {
   display: flex;
   gap: 50px;
-  padding-top: 40px;
+  padding-top: 110px;
   padding-bottom: 40px;
   position: relative;
 }
@@ -89,18 +89,13 @@ h6 {
 .hero .banner h1 {
   letter-spacing: 2px;
   word-spacing: 5px;
-  font-size: 40px;
+  font-size: 30px;
 }
 .hero .banner p {
   color: #111;
   letter-spacing: 2px;
 }
-.hero .banner span {
-  position: absolute;
-  right: 80px;
-  top: 100px;
-  z-index: -1;
-}
+
 .hero .banner:first-child {
   display: flex;
   justify-content: center;
@@ -123,20 +118,6 @@ h6 {
   }
   100% {
     transform: translateY(20px);
-  }
-}
-@media (max-width: 1186px) {
-  .hero .banner span {
-    right: -400px;
-  }
-  .hero .banner h1 {
-    font-size: 32px;
-  }
-}
-@media (max-width: 1085px) {
-  .hero .banner span {
-    right: -480px;
-    top: -315px;
   }
 }
 

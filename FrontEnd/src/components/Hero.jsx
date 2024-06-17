@@ -3,10 +3,10 @@ import React from "react";
 const Hero = ({ title, imageUrl }) => {
   return (
     <>
-      <div className="hero container  max-w-full ">
+      <div className="hero container max-w-full ">
         <div className="banner">
           <h1>{title}</h1>
-          <p>
+          <p className="text-[18px]">
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Perspiciatis architecto voluptatum, quisquam maxime explicabo fuga
             aperiam ratione quo perferendis eaque cum excepturi eum. Officiis,
@@ -19,11 +19,8 @@ const Hero = ({ title, imageUrl }) => {
           <img
             src={imageUrl}
             alt="hero"
-            className="animated-image h-[250px] sm:h-[600px]"
+            className="animated-image h-[250px] md:h-[400px]"
           />
-          <span>
-            <img src="/vector.png" alt="vector" className="md:w-[600px] " />
-          </span>
         </div>
       </div>
     </>
