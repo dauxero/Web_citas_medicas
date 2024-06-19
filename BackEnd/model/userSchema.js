@@ -22,14 +22,14 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: [true, "Phone Is Required!"],
-    minLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
-    maxLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
+    minLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
+    maxLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
   },
   nic: {
     type: String,
     required: [true, "NIC Is Required!"],
-    minLength: [13, "NIC Must Contain Only 13 Digits!"],
-    maxLength: [13, "NIC Must Contain Only 13 Digits!"],
+    minLength: [10, "NIC Must Contain Only 10 Digits!"],
+    maxLength: [10, "NIC Must Contain Only 10 Digits!"],
   },
   dob: {
     type: Date,
@@ -60,7 +60,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-//? Antes de guardar el documento, si la contraseña ha sido modificada, se encripta, usando 10 rondas
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
@@ -68,12 +67,10 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-//? metodo de comparacion de password
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-//? metodo de generacion de token
 userSchema.methods.generateJsonWebToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES,

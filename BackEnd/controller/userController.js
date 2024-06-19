@@ -7,17 +7,8 @@ import cloudinary from "cloudinary";
 //nota funcion de creacion de patient rol registro
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
   //? extraccion de datos
-  const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    dob,
-    gender,
-    password,
-    role,
-    nic,
-  } = req.body;
+  const { firstName, lastName, email, phone, dob, gender, password, nic } =
+    req.body;
 
   //? validacion de campos
   if (
@@ -28,20 +19,19 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     !nic ||
     !dob ||
     !gender ||
-    !password ||
-    !role
+    !password
   ) {
-    return next(new ErrorHandler("Please Fill Full Form!"), 400);
+    return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
 
   //? validacion de user creado por email registrado
-  let user = await User.findOne({ email });
-  if (user) {
-    return next(new ErrorHandler("User Already Registered"), 400);
+  const isRegistered = await User.findOne({ email });
+  if (isRegistered) {
+    return next(new ErrorHandler("User already Registered!", 400));
   }
 
   //? creacion del usuario / si no existe crea un nuevo usuario y genera un token
-  user = await User.create({
+  const user = await User.create({
     firstName,
     lastName,
     email,
@@ -49,7 +39,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     dob,
     gender,
     password,
-    role,
+    role: "Patient",
     nic,
   });
   generateToken(user, "User Registered!", 200, res);
@@ -75,18 +65,18 @@ export const login = catchAsyncErrors(async (req, res, next) => {
   //? Verificación de usuario existente
   const user = await User.findOne({ email }).select("+password");
   if (!user) {
-    return next(new ErrorHandler("Invalid Password Or Email", 400));
+    return next(new ErrorHandler("Invalid Email Or Password!", 400));
   }
 
   //? Comparación de contraseñas del bd
-  const isPasswordMatched = await user.comparePassword(password);
-  if (!isPasswordMatched) {
-    return next(new ErrorHandler("Invalid Password Or Email", 400));
+  const isPasswordMatch = await user.comparePassword(password);
+  if (!isPasswordMatch) {
+    return next(new ErrorHandler("Invalid Email Or Password!", 400));
   }
 
   //? validacion de rol
   if (role !== user.role) {
-    return next(new ErrorHandler("User With This Tole Not Found", 400));
+    return next(new ErrorHandler(`User Not Found With This Role!`, 400));
   }
 
   generateToken(user, "User Login Successfully!", 200, res);
