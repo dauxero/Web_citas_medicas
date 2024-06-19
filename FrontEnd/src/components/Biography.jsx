@@ -5,7 +5,7 @@ const Biography = ({ imageUrl }) => {
     <>
       <div className="container biography max-w-full">
         <div className="banner">
-          <img src={imageUrl} alt="whoweare" />
+          <img src={imageUrl} alt="biography" />
         </div>
         <div className="banner justify-center">
           <p>Biography</p>

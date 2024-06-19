@@ -13,7 +13,7 @@ const Home = () => {
         title={"Welcome to a Medical center | Medical Clinic"}
         imageUrl={"/hero.png"}
       />
-      <Biography imageUrl={"/about.png"} />
+      <Biography imageUrl={"/biography.png"} />
       <Departments />
       <MessageForm />
     </>
