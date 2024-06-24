@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
@@ -50,6 +50,9 @@ const Navbar = () => {
               LOGIN
             </button>
           )}
+        </div>
+        <div className="hamburger max-w-full" onClick={() => setShow(!show)}>
+          <GiHamburgerMenu />
         </div>
       </nav>
     </>
