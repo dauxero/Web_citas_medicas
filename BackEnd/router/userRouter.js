@@ -25,10 +25,10 @@ router.post("/login", login);
 //?Post de registro de Admin / auth token
 router.post("/admin/addnew", isAdminAuthenticated, addNewAdmin);
 
-//? get all doctors
+//? vista de todos los doctores
 router.get("/doctors", getAllDoctors);
 
-//? user details
+//? detaller de los usuario patient  o admin
 router.get("/admin/me", isAdminAuthenticated, getUserDetails);
 router.get("/patient/me", isPatientAuthenticated, getUserDetails);
 

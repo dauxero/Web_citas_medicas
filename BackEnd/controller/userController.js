@@ -138,7 +138,7 @@ export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//?  get de mostar la informacion de los usuarios tanto como patient y admin
+//nota  get de mostar la informacion de los usuarios tanto como patient y admin
 export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
   //auth
   const user = req.user;
@@ -148,7 +148,7 @@ export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//? desconexion de usuario / eliminacion de tokens admin
+//nota desconexion de usuario / eliminacion de tokens admin
 export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
   res
     .status(200)
@@ -176,7 +176,7 @@ export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
-//? agregar un nuevo doctor
+//nota agregar un nuevo doctor
 export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
   // cuando no recibe un archivo o un objeto que sea v-0
   if (!req.files || Object.keys(req.files).length === 0) {

@@ -37,10 +37,11 @@ export const isPatientAuthenticated = catchAsyncErrors(
       return next(new ErrorHandler("Patient Not Authenticated"), 400);
     }
 
-    //?verificacion si el toque es generado por medio del sitio
+    //?Decodificación y verificación del token JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    //? se obtiene el id por medio del metodo generaciontoken / si no cumple niega la autorizacion
+    //? Obtención del usuario a partir del ID decodificado
     req.user = await User.findById(decoded.id);
+    //? Verificación del rol del usuario
     if (req.user.role !== "Patient") {
       return next(
         new ErrorHandler(

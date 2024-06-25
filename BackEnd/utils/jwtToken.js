@@ -3,7 +3,7 @@ export const generateToken = (user, message, statusCode, res) => {
   //? asignacion del tipo de cookie
   const cookieName = user.role === "Admin" ? "adminToken" : "patientToken";
 
-  //? expiracion de 7 dias
+  //? Configuración de la cookie en la respuesta / 7 dias expiracion
   res
     .status(statusCode)
     .cookie(cookieName, token, {
