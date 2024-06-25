@@ -15,6 +15,7 @@ import { Context } from "./main";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const App = () => {
   // nota creamos un context que traera los props
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
+        <Footer />
         {/* colocamos la posicion de donde va salir las notificaciones o alerta*/}
         <ToastContainer position="top-center" />
       </Router>

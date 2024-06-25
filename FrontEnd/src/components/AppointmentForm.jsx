@@ -94,7 +94,7 @@ const AppointmentForm = () => {
   };
   return (
     <>
-      <div className="container form-component appointment-form">
+      <div className="container form-component appointment-form max-w-full">
         <h2>Appoinment</h2>
         <form onSubmit={handleApoointment}>
           <div>
