@@ -84,7 +84,7 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 
 //nota creacion de admin rol
 export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
-  const { firstName, lastName, email, phone, dob, gender, password, nic } =
+  const { firstName, lastName, email, phone, nic, dob, gender, password } =
     req.body;
 
   //? validacion de campos
@@ -98,15 +98,13 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
     !gender ||
     !password
   ) {
-    return next(new ErrorHandler("Please Fill Full Form!"), 400);
+    return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
 
   //? si el email esta utilziado
   const isRegistered = await User.findOne({ email });
   if (isRegistered) {
-    return next(
-      new ErrorHandler(`${isRegistered.role} With This Email Already Exists!`)
-    );
+    return next(new ErrorHandler("Admin With This Email Already Exists!", 400));
   }
 
   //? creacion de admin / especificando que el role seria admin
@@ -115,10 +113,10 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
     lastName,
     email,
     phone,
+    nic,
     dob,
     gender,
     password,
-    nic,
     role: "Admin",
   });
 
@@ -126,6 +124,7 @@ export const addNewAdmin = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "New Admin Registered",
+    admin,
   });
 });
 

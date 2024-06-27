@@ -24,7 +24,7 @@ router.post("/login", login);
 
 //?Post de registro de Admin / auth token
 router.post("/admin/addnew", isAdminAuthenticated, addNewAdmin);
-
+router.post("/doctor/addnew", isAdminAuthenticated, addNewDoctor);
 //? vista de todos los doctores
 router.get("/doctors", getAllDoctors);
 
@@ -37,6 +37,5 @@ router.get("/admin/logout", isAdminAuthenticated, logoutAdmin);
 router.get("/patient/logout", isPatientAuthenticated, logoutPatient);
 
 //? agregar un doctor / el admin es el que agrega un doctor
-router.post("/doctor/addnew", isAdminAuthenticated, addNewDoctor);
 
 export default router;
