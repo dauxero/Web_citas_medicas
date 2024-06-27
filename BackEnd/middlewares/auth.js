@@ -9,7 +9,7 @@ export const isAdminAuthenticated = catchAsyncErrors(async (req, res, next) => {
 
   //? autentificacion de token
   if (!token) {
-    next(new ErrorHandler("Dashboard User is not authenticated!", 400));
+    return next(new ErrorHandler("Dashboard User is not authenticated!", 400));
   }
 
   //?verificacion si el toque es generado por medio del sitio
@@ -54,3 +54,16 @@ export const isPatientAuthenticated = catchAsyncErrors(
     next();
   }
 );
+
+export const isAuthorized = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new ErrorHandler(
+          `${req.user.role} not allowed to access this resource!`
+        )
+      );
+    }
+    next();
+  };
+};

@@ -52,7 +52,7 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 
   //? validacion de campos
   if (!email || !password || !confirmPassword || !role) {
-    return next(new ErrorHandler("Please Provide All Details!"), 400);
+    return next(new ErrorHandler("Please Fill Full Form!"), 400);
   }
 
   //? Verificación de coincidencia de contraseñas
