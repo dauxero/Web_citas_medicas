@@ -1,6 +1,10 @@
 import React, { useContext, useEffect } from "react";
+
+//? estilos css
+import "./index.css";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
@@ -13,9 +17,6 @@ import Doctors from "./components/Doctors";
 import Messages from "./components/Messages";
 import Sidebar from "./components/Sidebar";
 import { Context } from "./main";
-
-//? estilos css
-import "./index.css";
 
 const App = () => {
   //? context estado
