@@ -215,7 +215,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     !doctorDepartment ||
     !docAvatar
   ) {
-    return next(new ErrorHandler("Please Provide Full Details! "), 400);
+    return next(new ErrorHandler("Please Fill Full Form! "), 400);
   }
 
   const isRegistered = await User.findOne({ email });
