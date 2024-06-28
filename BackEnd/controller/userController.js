@@ -179,7 +179,7 @@ export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
 export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
   // cuando no recibe un archivo o un objeto que sea v-0
   if (!req.files || Object.keys(req.files).length === 0) {
-    return next(new ErrorHandler("Doctor Avatar Required", 400));
+    return next(new ErrorHandler("Doctor Avatar Required!", 400));
   }
 
   const { docAvatar } = req.files;
@@ -187,7 +187,7 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
   //? validacion de formato de imagen
   const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
   if (!allowedFormats.includes(docAvatar.mimetype)) {
-    return next(new ErrorHandler("File Format Not Supported"), 400);
+    return next(new ErrorHandler("File Format Not Supported!", 400));
   }
 
   //? validacion de campos vacios
@@ -196,33 +196,32 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     lastName,
     email,
     phone,
+    nic,
     dob,
     gender,
     password,
-    nic,
     doctorDepartment,
   } = req.body;
-
   if (
     !firstName ||
     !lastName ||
     !email ||
     !phone ||
+    !nic ||
     !dob ||
     !gender ||
     !password ||
-    !nic ||
     !doctorDepartment ||
     !docAvatar
   ) {
-    return next(new ErrorHandler("Please Fill Full Form! "), 400);
+    return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
 
+  //? validacion de correo usado
   const isRegistered = await User.findOne({ email });
   if (isRegistered) {
-    new ErrorHandler(
-      `${isRegistered.role} Already Registered with this email!`,
-      400
+    return next(
+      new ErrorHandler("Doctor With This Email Already Exists!", 400)
     );
   }
 
