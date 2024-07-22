@@ -577,3 +577,10 @@ input[type="time"]:before {
   color: #444;
   margin-right: 0.5em;
 }
+
+/* boton de eliminar appointment */
+
+.delete-button {
+  padding: 0.5rem 1rem;
+  margin-left: 2rem;
+}
