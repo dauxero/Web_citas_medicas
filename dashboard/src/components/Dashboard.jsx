@@ -25,7 +25,7 @@ const Dashboard = () => {
     fetchAppointments();
   }, []);
 
-  //? boton de actualizar los status de las citas
+  //nota  boton de actualizar los status de las citas
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
       const { data } = await axios.put(
@@ -46,7 +46,24 @@ const Dashboard = () => {
     }
   };
 
-  console.log(appointments);
+  //nota boton de eliminar
+  const handleDeleteAppointment = async (appointmentId) => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:4000/api/v1/appointment/delete/${appointmentId}`,
+        { withCredentials: true }
+      );
+      setAppointments((prevAppointments) =>
+        prevAppointments.filter(
+          (appointment) => appointment._id !== appointmentId
+        )
+      );
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
   const { isAuthenticated, admin } = useContext(Context);
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
@@ -89,6 +106,7 @@ const Dashboard = () => {
                 <th>Department</th>
                 <th>Status</th>
                 <th>Visited</th>
+                <th>Delete Appointment</th>
               </tr>
             </thead>
             <tbody>
@@ -130,6 +148,16 @@ const Dashboard = () => {
                         ) : (
                           <AiFillCloseCircle className="red" />
                         )}
+                      </td>
+                      <td>
+                        <button
+                          className="delete-button"
+                          onClick={() =>
+                            handleDeleteAppointment(appointment._id)
+                          }
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))
